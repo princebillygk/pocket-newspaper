@@ -1,11 +1,11 @@
-import React, { FC, useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { FC, useState, useEffect } from 'react';
+import { FlatList, BackHandler } from 'react-native';
 import SearchBox from '../components/SearchBox';
 import { StackScreenProps } from '@react-navigation/stack';
 import { TRootParmList } from '../App';
 import useNewspapers from '../hooks/useNewspapers';
 import NewspaperList from '../components/NewspaperList';
-import { INewspaper} from '../types';
+import { INewspaper } from '../types';
 import ErrorMsg from '../components/ErrorMessage';
 
 
@@ -20,6 +20,22 @@ const SearchScreen: FC<StackScreenProps<TRootParmList, 'Search'>> =
             bn: [],
             en: []
         };
+
+        function handleBackButtonClick() {
+            if (searchTerm == "") {
+                return false;
+            }
+            setSearchTerm("");
+            searchNewspaper(searchTerm);
+            return true;
+        }
+
+        useEffect(() => {
+            BackHandler.addEventListener('hardwareBackPress', handleBackButtonClick);
+            return () => {
+                BackHandler.removeEventListener('hardwareBackPress', handleBackButtonClick);
+            };
+        }, []);
 
         if (newspapersWithPagination && catagories) {
             for (const paperIndex in newspapersWithPagination.data) {

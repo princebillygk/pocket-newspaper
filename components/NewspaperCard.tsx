@@ -6,9 +6,8 @@ import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 
 const NewspaperCard: FC<INewspaper> = (paper) => {
-    async function openBrowser() {
+    async function openBrowser(url: string) {
         try {
-            const url = 'https://www.google.com'
             if (await InAppBrowser.isAvailable()) {
                 const result = await InAppBrowser.open(url, {
                     // iOS Properties
@@ -40,7 +39,7 @@ const NewspaperCard: FC<INewspaper> = (paper) => {
                         'my-custom-header': 'my custom header value'
                     }
                 })
-                Alert.alert(JSON.stringify(result))
+                // Alert.alert(JSON.stringify(result))
             }
             else Linking.openURL(url)
         } catch (error) {
@@ -50,7 +49,7 @@ const NewspaperCard: FC<INewspaper> = (paper) => {
     }
 
     return (
-        <TouchableOpacity onPress={openBrowser} >
+        <TouchableOpacity onPress={() => openBrowser(paper.url)} >
             <View style={styles.newsCard}>
                 <View style={styles.thumbnailContainer}>
                     <Image style={styles.thumbnail} source={{ uri: paper.imgurl }} />
