@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { View, TextInput, TextInputProps, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, TextInput, TextInputProps, StyleSheet, ActivityIndicator, Image } from 'react-native';
 
 //icon imports
 
@@ -10,7 +10,7 @@ export interface ISearchBoxProps extends Required<Pick<TextInputProps, 'placehol
 const SearchBox: FC<ISearchBoxProps> = ({ isLoading, ...options }) => {
     return (
         <View style={styles.searchBoxContainer}>
-            {/* <Image source={{uri: './assets/icons/search-icon.png'}}/> */}
+            <Image style={styles.icon} source={require('../assets/icons/search-icon.png')} />
             <TextInput
                 autoCapitalize="none"
                 autoCompleteType="off"
@@ -37,8 +37,9 @@ const styles = StyleSheet.create({
         flexDirection: "row"
     },
     icon: {
+        width: 32,
+        height: 32,
         alignSelf: "center",
-        fontSize: 25,
         marginHorizontal: 10
     }
 });
