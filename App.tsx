@@ -8,13 +8,17 @@ import { StyleSheet, StatusBar, SafeAreaView, View, Text, Image } from 'react-na
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 //Screen imports
-import SearchScreen from './screens/SearchScreen';
+import HomeScreen from './screens/HomeScreen';
+import CatagoryScreen from './screens/CatagoryScreen';
 
 //admob
 import { TestIds, BannerAd, BannerAdSize } from '@react-native-firebase/admob';
+import { ICatagory } from 'types';
+import { INewspaperQueryOptions } from 'hooks/useNewspapers';
 
 export type TRootParmList = {
-  Search: undefined;
+  Home: undefined;
+  Catagory: { title: string, options: INewspaperQueryOptions }
 }
 
 // declare const global: { HermesInternal: null | {} };
@@ -27,13 +31,15 @@ const App: FC = () => {
         <Navigator screenOptions={{
           headerStyle: styles.headerStyle,
           cardStyle: styles.screenStyle,
-          headerTitle: props => (
-            <View style={styles.headerContainer} >
-              <Image style={styles.headerLogo} source={require('./assets/img/logo.png')} />
-              <Text {...props} style={styles.headerText}>Pocket Newspaper</Text>
-            </View>)
         }}>
-          <Screen name="Search" component={SearchScreen} options={{ title: APP.TITLE }} />
+          <Screen name="Home" component={HomeScreen} options={{
+            headerTitle: props => (
+              <View style={styles.headerContainer} >
+                <Image style={styles.headerLogo} source={require('./assets/img/logo.png')} />
+                <Text {...props} style={styles.headerText}>Pocket Newspaper</Text>
+              </View>)
+          }} />
+          <Screen name="Catagory" component={CatagoryScreen} options={({ route }) => ({ title: route.params.title })} />
         </Navigator>
       </NavigationContainer>
       <BannerAd

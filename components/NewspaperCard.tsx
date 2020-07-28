@@ -1,11 +1,15 @@
 import React, { FC } from 'react';
-import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, Alert } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, Alert, Dimensions } from 'react-native';
 import { INewspaper } from '../types';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
+interface INewspaperCardProps extends INewspaper {
+    full?: boolean
+}
 
-const NewspaperCard: FC<INewspaper> = (paper) => {
+const NewspaperCard: FC<INewspaperCardProps> = ({ full, ...paper }) => {
     async function openBrowser(url: string) {
         try {
             if (await InAppBrowser.isAvailable()) {
@@ -48,13 +52,16 @@ const NewspaperCard: FC<INewspaper> = (paper) => {
         }
     }
 
+
     return (
         <TouchableOpacity onPress={() => openBrowser(paper.url)} >
-            <View style={styles.newsCard}>
+            <View style={full ? styles.newsCardfull : styles.newsCard}>
                 <View style={styles.thumbnailContainer}>
-                    <Image style={styles.thumbnail} source={{ uri: paper.imgurl }} />
+                    <Image style={styles.thumbnail} source={{ uri: paper.imageUrl }} />
                 </View>
-                <Text style={styles.title}>{paper.bn_name ? paper.bn_name : paper.name.toUpperCase()}</Text>
+                <Text numberOfLines={1} style={full ? styles.titleFull : styles.title}>
+                    {paper.bnName ? paper.bnName : paper.name.toUpperCase()}
+                </Text>
             </View>
         </TouchableOpacity >
     )
@@ -64,20 +71,36 @@ const styles = StyleSheet.create({
     newsCard: {
         backgroundColor: "#eceff1",
         padding: 15,
-        margin: 5,
+        marginRight: windowWidth * 0.03,
         borderRadius: 5,
         flexDirection: "column",
         alignItems: "center"
     },
+    newsCardfull: {
+        backgroundColor: "#eceff1",
+        marginVertical: windowWidth * 0.01,
+        marginHorizontal: windowWidth * 0.05,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        paddingHorizontal: windowWidth * 0.04,
+        paddingVertical: windowWidth * 0.01,
+    },
     title: {
-        fontSize: 10,
+        fontSize: windowWidth * 0.028,
         marginTop: 5,
         fontWeight: "bold",
         color: "#607d8b"
     },
+    titleFull: {
+        fontSize: windowWidth * 0.035,
+        width: 150,
+        fontWeight: "bold",
+        color: "#607d8b",
+    },
     thumbnailContainer: {
-        width: 100,
-        height: 70
+        width: windowWidth * 0.3,
+        height: windowHeight * 0.1
     },
     thumbnail: {
         resizeMode: 'contain',

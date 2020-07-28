@@ -1,26 +1,34 @@
 import React, { FC } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import { INewspaper } from '../types';
-import { FlatList } from 'react-native-gesture-handler';
+import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import useNewspaper, { INewspaperQueryOptions } from '../hooks/useNewspapers';
+
+const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 //components imports
 import NewspaperCard from './NewspaperCard';
+import { useNavigation } from '@react-navigation/native';
 
 export interface INewspaperListProps {
     title: string
-    data?: INewspaper[]
+    options?: INewspaperQueryOptions
 }
 
-const NewspaperList: FC<INewspaperListProps> = ({ title, data }) => {
-    if (data === undefined || data.length === 0) {
+const NewspaperList: FC<INewspaperListProps> = ({ title, options }) => {
+    const { newspapers, isLoading, error } = useNewspaper(options);
+    const navigation = useNavigation();
+    if (newspapers === undefined || newspapers.length === 0) {
         return null;
     }
     return (
         <View style={styles.list}>
-            <Text style={styles.title}>{title}</Text>
+            <TouchableOpacity onPress={() => { navigation.navigate('Catagory', { title, options },) }}>
+                <View style={styles.titleButton}><Text style={styles.title}>{title}</Text></View>
+            </TouchableOpacity>
             <FlatList
                 horizontal
-                data={data}
+                data={newspapers}
                 showsHorizontalScrollIndicator={false}
                 keyExtractor={paper => paper.id + paper.name}
                 renderItem={({ item }) => <NewspaperCard {...item} />} />
@@ -30,12 +38,15 @@ const NewspaperList: FC<INewspaperListProps> = ({ title, data }) => {
 
 const styles = StyleSheet.create({
     list: {
-        marginHorizontal: 15,
-        marginVertical: 10
+        marginHorizontal: windowWidth * 0.04,
+        marginVertical: windowWidth * 0.03
     },
     title: {
-        fontSize: 18,
+        fontSize: windowWidth * 0.05,
         fontWeight: "bold"
+    },
+    titleButton: {
+        marginBottom: windowWidth * 0.02,
     }
 });
 

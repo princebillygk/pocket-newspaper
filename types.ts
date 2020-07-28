@@ -7,3 +7,8 @@ export interface INewspaper {
     url: string;
     category?: string[];
 }
+
+export interface ICatagory {
+    id: number;
+    title: string;
+}
