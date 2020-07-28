@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "773832049509",
+    "firebase_url": "https://pocket-newspaper-19e75.firebaseio.com",
+    "project_id": "pocket-newspaper-19e75",
+    "storage_bucket": "pocket-newspaper-19e75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:773832049509:android:33ef2f52c8670d463a978c",
+        "android_client_info": {
+          "package_name": "com.pocketnewspaperapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "773832049509-p723c7ig802ifq2okpuut4riuqtmsd7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pocketnewspaperapp",
+            "certificate_hash": "06dc267801ba5ab2ee79b662ee97a7c75f826946"
+          }
+        },
+        {
+          "client_id": "773832049509-6khe15dq490vruaa1kjaj0nip28agbi8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAZ6lOEVHodiOwQzXg2D7Ltce18gDJPMjw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "773832049509-6khe15dq490vruaa1kjaj0nip28agbi8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
