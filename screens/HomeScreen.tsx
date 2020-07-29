@@ -1,10 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FlatList, ProgressBarAndroid } from 'react-native';
+import { FlatList, ProgressBarAndroid, StyleSheet, View } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { TRootParmList } from '../App';
 import NewspaperList from '../components/NewspaperList';
 import ErrorMsg from '../components/ErrorMessage';
 import useCatagories from '../hooks/useCatagories';
+import BannerAd from '../components/MyBannerAd';
+import Styles from '../styles';
 
 
 
@@ -15,7 +17,7 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
         const { catagories, error, isLoading } = useCatagories();
 
         if (error) {
-            return <ErrorMsg />
+            return <ErrorMsg message="Couldn't connect to server" />
         }
 
         const LanguageLists: FC = () => {
@@ -30,6 +32,7 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
                     title="English"
                     options={{ lang: "en" }}
                 />
+                <View style={Styles.bannerAdContainer}><BannerAd size="LARGE_BANNER" /></View>
             </>
         }
 
@@ -48,6 +51,9 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
                         />
                     }
                     ListHeaderComponent={LanguageLists}
+                    ListFooterComponent={
+                        <View style={Styles.bannerAdContainer}><BannerAd size="MEDIUM_RECTANGLE" /></View>
+                    }
                 />
             </>
         );

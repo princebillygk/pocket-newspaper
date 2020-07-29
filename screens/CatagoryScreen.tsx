@@ -5,6 +5,9 @@ import { TRootParmList } from '../App';
 import NewspaperList from '../components/NewspaperList';
 import ErrorMsg from '../components/ErrorMessage';
 import useCatagories from '../hooks/useCatagories';
+import BannerAd from '../components/MyBannerAd';
+import Styles from '../styles';
+import { View } from 'react-native';
 
 
 
@@ -12,20 +15,19 @@ import useCatagories from '../hooks/useCatagories';
 const CatagoryScreen: FC<StackScreenProps<TRootParmList, 'Catagory'>> =
     ({ route, navigation }) => {
         const { title, options } = route.params;
-        const [searchTerm, setSearchTerm] = useState<string>("");
-        const { catagories, error, isLoading } = useCatagories();
-
-        if (error) {
-            return <ErrorMsg />
-        }
-
-
-
         return (
-            <NewspaperList
-                options={{ ...options, limit: 200 }}
-                full
-            />
+            <>
+                <NewspaperList
+                    options={{ ...options, limit: 200 }}
+                    full
+                    ListHeaderComponent={
+                        <View style={Styles.bannerAdContainer}><BannerAd size="BANNER" /></View>
+                    }
+                    ListFooterComponent={
+                        <View style={Styles.bannerAdContainer}><BannerAd size="MEDIUM_RECTANGLE" /></View>
+                    }
+                />
+            </>
         );
     }
 
