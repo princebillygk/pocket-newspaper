@@ -1,5 +1,5 @@
 import React, { FC, useState, useEffect } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, ProgressBarAndroid } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { TRootParmList } from '../App';
 import NewspaperList from '../components/NewspaperList';
@@ -19,7 +19,8 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
         }
 
         const LanguageLists: FC = () => {
-
+            if (isLoading)
+                return null;
             return <>
                 <NewspaperList
                     title="Bengali"
@@ -27,7 +28,7 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
                 />
                 <NewspaperList
                     title="English"
-                    options={{lang: "en"}}
+                    options={{ lang: "en" }}
                 />
             </>
         }
@@ -35,6 +36,7 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
 
         return (
             <>
+                <ProgressBarAndroid animating={isLoading} styleAttr="Horizontal" />
 
                 <FlatList
                     data={catagories}

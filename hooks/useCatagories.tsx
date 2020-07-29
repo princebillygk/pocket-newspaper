@@ -12,7 +12,7 @@ interface IState {
 
 
 function useCatagories() {
-    const [{ catagories, error, isLoading }, setState] = useState<IState>({ isLoading: false, });
+    const [{ catagories, error, isLoading }, setState] = useState<IState>({catagories:[], isLoading: false, });
 
     async function getCatagories(): Promise<void> {
         setState({ isLoading: true });

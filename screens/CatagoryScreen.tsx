@@ -2,7 +2,7 @@ import React, { FC, useState, useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { TRootParmList } from '../App';
-import VerticalNewspaperList from '../components/VerticalNewspaperList';
+import NewspaperList from '../components/NewspaperList';
 import ErrorMsg from '../components/ErrorMessage';
 import useCatagories from '../hooks/useCatagories';
 
@@ -22,9 +22,9 @@ const CatagoryScreen: FC<StackScreenProps<TRootParmList, 'Catagory'>> =
 
 
         return (
-            <VerticalNewspaperList
-                title={title}
+            <NewspaperList
                 options={{ ...options, limit: 200 }}
+                full
             />
         );
     }

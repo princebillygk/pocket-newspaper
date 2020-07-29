@@ -18,10 +18,9 @@ interface IState {
 
 
 function useNewspapers(options: INewspaperQueryOptions = {}) {
-    const [{ newspapers, error, isLoading }, setState] = useState<IState>({ isLoading: false, });
+    const [{ newspapers, error, isLoading }, setState] = useState<IState>({ newspapers:[], isLoading: false, });
 
     async function getNewspaper({ term, catagories, lang, limit = 20 }: INewspaperQueryOptions = {}): Promise<void> {
-        console.log(`"${term}"`)
         setState({ isLoading: true });
         try {
             let query: any = firestore().collection('newspapers');

@@ -47,8 +47,7 @@ const NewspaperCard: FC<INewspaperCardProps> = ({ full, ...paper }) => {
             }
             else Linking.openURL(url)
         } catch (error) {
-            Alert.alert(error.message)
-            throw error;
+            Alert.alert("Something went wrong")
         }
     }
 
@@ -56,7 +55,7 @@ const NewspaperCard: FC<INewspaperCardProps> = ({ full, ...paper }) => {
     return (
         <TouchableOpacity onPress={() => openBrowser(paper.url)} >
             <View style={full ? styles.newsCardfull : styles.newsCard}>
-                <View style={styles.thumbnailContainer}>
+                <View style={full ? styles.thumbnailContainerFull : styles.thumbnailContainer}>
                     <Image style={styles.thumbnail} source={{ uri: paper.imageUrl }} />
                 </View>
                 <Text numberOfLines={1} style={full ? styles.titleFull : styles.title}>
@@ -74,17 +73,19 @@ const styles = StyleSheet.create({
         marginRight: windowWidth * 0.03,
         borderRadius: 5,
         flexDirection: "column",
-        alignItems: "center"
+        alignItems: "center",
+        marginBottom: 5,
     },
     newsCardfull: {
         backgroundColor: "#eceff1",
         marginVertical: windowWidth * 0.01,
-        marginHorizontal: windowWidth * 0.05,
+        borderRadius: 15,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         paddingHorizontal: windowWidth * 0.04,
         paddingVertical: windowWidth * 0.01,
+        // elevation: 1
     },
     title: {
         fontSize: windowWidth * 0.028,
@@ -94,13 +95,17 @@ const styles = StyleSheet.create({
     },
     titleFull: {
         fontSize: windowWidth * 0.035,
-        width: 150,
+        width: windowWidth * 0.55,
         fontWeight: "bold",
         color: "#607d8b",
     },
     thumbnailContainer: {
         width: windowWidth * 0.3,
         height: windowHeight * 0.1
+    },
+    thumbnailContainerFull: {
+        width: windowHeight * 0.1,
+        height: windowHeight * 0.08,
     },
     thumbnail: {
         resizeMode: 'contain',
