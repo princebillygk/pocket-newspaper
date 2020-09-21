@@ -2,6 +2,7 @@ import React, { FC } from 'react';
 import { View, Text, Image, StyleSheet, TouchableOpacity, Linking, Alert, Dimensions } from 'react-native';
 import { INewspaper } from '../types';
 import { useNavigation } from '@react-navigation/native';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 
 const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
@@ -11,8 +12,31 @@ interface INewspaperCardProps extends INewspaper {
 
 const NewspaperCard: FC<INewspaperCardProps> = ({ full, children, ...paper }) => {
     const navigation = useNavigation();
+    async function openLink(url: string) {
+        try {
+            if (await InAppBrowser.isAvailable()) {
+                const result = await InAppBrowser.open(url, {
+                    showTitle: true,
+                    // toolbarColor: '#6200EE',
+                    secondaryToolbarColor: 'black',
+                    enableUrlBarHiding: true,
+                    enableDefaultShare: true,
+                    forceCloseOnRedirection: false,
+                    animations: {
+                        startEnter: 'slide_in_right',
+                        startExit: 'slide_out_left',
+                        endEnter: 'slide_in_left',
+                        endExit: 'slide_out_right'
+                    },
+                })
+            }
+            else navigation.navigate('Newspaper', { newspaper: paper });
+        } catch (error) {
+            Alert.alert(error.message)
+        }
+    }
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('Newspaper', { newspaper: paper })} >
+        <TouchableOpacity onPress={() => openLink(paper.url)} >
             <View style={full ? styles.newsCardfull : styles.newsCard}>
                 <View style={full ? styles.thumbnailContainerFull : styles.thumbnailContainer}>
                     <Image style={styles.thumbnail} source={{ uri: paper.imageUrl }} />

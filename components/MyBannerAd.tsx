@@ -1,31 +1,33 @@
-import React, { FC } from 'react';
-//admob
+import React, { FC, useState } from 'react';
 import { TestIds, BannerAd, BannerAdSize } from '@react-native-firebase/admob';
-import { StyleSheet, Dimensions, View, StyleProp, ViewStyle } from 'react-native';
+import {View} from 'react-native';
+import Styles from '../styles';
 
-const { width: windowWidth, height: windowHeight } = Dimensions.get('window');
 
 export interface IMyBannerAdProps {
     size?: keyof typeof BannerAdSize;
 }
 
 const MyBannerAd: FC<IMyBannerAdProps> = ({ size }) => {
-
+    const [isAdLoaded, setIsAtLoaded] = useState<boolean>(false);
 
     return (
-        < BannerAd
-            unitId={/*"ca-app-pub-6299317181860539/9447867268"*/TestIds.BANNER}
-            size={size ? size : BannerAdSize.BANNER}
-            requestOptions={{
-                requestNonPersonalizedAdsOnly: true,
-            }}
-            onAdLoaded={() => {
-                console.log('Advert loaded');
-            }}
-            onAdFailedToLoad={(error: any) => {
-                console.error('Advert failed to load: ', error);
-            }}
-        />
+        <View
+            {...!isAdLoaded && { style: Styles.dNone }}>
+            < BannerAd
+                unitId={/*"ca-app-pub-6299317181860539/9447867268"*/TestIds.BANNER}
+                size={size ? size : BannerAdSize.BANNER}
+                requestOptions={{
+                    requestNonPersonalizedAdsOnly: true,
+                }}
+                onAdLoaded={() => {
+                    setIsAtLoaded(true)
+                }}
+                onAdFailedToLoad={(error: any) => {
+                    console.error('Advert failed to load: ', error);
+                }}
+            />
+        </View >
     )
 }
 

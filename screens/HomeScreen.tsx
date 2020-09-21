@@ -51,9 +51,6 @@ const HomeScreen: FC<StackScreenProps<TRootParmList, 'Home'>> =
                         />
                     }
                     ListHeaderComponent={LanguageLists}
-                    ListFooterComponent={
-                        <View style={Styles.bannerAdContainer}><BannerAd size="MEDIUM_RECTANGLE" /></View>
-                    }
                 />
             </>
         );

@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: windowWidth * 0.05,
         marginHorizontal: windowWidth * 0.04,
+        marginTop: windowHeight*0.02,
         fontWeight: "bold"
     },
     titleButton: {

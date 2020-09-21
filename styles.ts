@@ -5,5 +5,8 @@ export default StyleSheet.create({
         flexDirection: "row",
         justifyContent: "center",
         marginVertical: 10
+    },
+    dNone: {
+        display: "none"
     }
 })
