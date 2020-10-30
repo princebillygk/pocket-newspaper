@@ -15,7 +15,7 @@ const MyBannerAd: FC<IMyBannerAdProps> = ({ size }) => {
         <View
             {...!isAdLoaded && { style: Styles.dNone }}>
             < BannerAd
-                unitId={/*"ca-app-pub-6299317181860539/9447867268"*/TestIds.BANNER}
+                unitId={"BannerAdca-app-pub-3928424957314681/2691234648"}
                 size={size ? size : BannerAdSize.BANNER}
                 requestOptions={{
                     requestNonPersonalizedAdsOnly: true,
