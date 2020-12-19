@@ -1,9 +1,3 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * <p>This source code is licensed under the MIT license found in the LICENSE file in the root
- * directory of this source tree.
- */
 package com.pocketnewspaperapp;
 
 import android.content.Context;
@@ -37,12 +31,7 @@ public class ReactNativeFlipper {
 
       NetworkFlipperPlugin networkFlipperPlugin = new NetworkFlipperPlugin();
       NetworkingModule.setCustomClientBuilder(
-          new NetworkingModule.CustomClientBuilder() {
-            @Override
-            public void apply(OkHttpClient.Builder builder) {
-              builder.addNetworkInterceptor(new FlipperOkhttpInterceptor(networkFlipperPlugin));
-            }
-          });
+              builder -> builder.addNetworkInterceptor(new FlipperOkhttpInterceptor(networkFlipperPlugin)));
       client.addPlugin(networkFlipperPlugin);
       client.start();
 
@@ -56,12 +45,7 @@ public class ReactNativeFlipper {
               public void onReactContextInitialized(ReactContext reactContext) {
                 reactInstanceManager.removeReactInstanceEventListener(this);
                 reactContext.runOnNativeModulesQueueThread(
-                    new Runnable() {
-                      @Override
-                      public void run() {
-                        client.addPlugin(new FrescoFlipperPlugin());
-                      }
-                    });
+                        () -> client.addPlugin(new FrescoFlipperPlugin()));
               }
             });
       } else {
